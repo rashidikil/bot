@@ -9,7 +9,7 @@ from database import get_task
 from geopy.distance import geodesic
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-TOKEN = "6123011746:AAEE3x-kx8RaP72D_SgrlEcaNZBA17TpTOM"
+TOKEN = "My_Token"
 
 storage = MemoryStorage()
 bot = Bot(token=TOKEN)
