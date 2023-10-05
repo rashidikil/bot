@@ -90,6 +90,6 @@ async def give_task(user_id, task_id):
 
 @dp.message_handler(lambda message: message.text == "Получить другое задание")
 async def get_another_task(message: types.Message):
-    # Логика для получения другого задания
+# Логика для получения другого задания
 
 executor.start_polling(dp, skip_updates=True)
