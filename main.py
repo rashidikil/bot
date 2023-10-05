@@ -91,6 +91,7 @@ async def give_task(user_id, task_id):
 @dp.message_handler(lambda message: message.text == "Получить другое задание")
 async def get_another_task(message: types.Message):
 # Логика для получения другого задания
+await process_location(message, state)
 
 if __name__ == '__main__':
     # Здесь начинается основная часть программы
