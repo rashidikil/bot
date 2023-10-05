@@ -4,12 +4,12 @@ from aiogram.utils import executor
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from database import add_new_user, connect_to_db
+from database import add_new_user, connect_to_db, check_unique_username
 from database import get_task
 from geopy.distance import geodesic
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-TOKEN = "My_Token"
+TOKEN = "6123011746:AAEE3x-kx8RaP72D_SgrlEcaNZBA17TpTOM"
 
 storage = MemoryStorage()
 bot = Bot(token=TOKEN)
@@ -28,7 +28,12 @@ async def cmd_start(message: types.Message):
 @dp.message_handler(state=Registration.waiting_for_username, content_types=types.ContentTypes.TEXT)
 async def process_username(message: types.Message, state: FSMContext):
     username = message.text
-    # Здесь должна быть проверка на уникальность username
+    # Проверка на уникальность username
+    unique = check_unique_username(username)
+if not unique:
+    await message.answer("Это имя пользователя уже занято, пожалуйста, выберите другое.")
+    return
+    # Добавление нового пользователя
     add_new_user(username, message.from_user.id)
     await state.finish()
 
@@ -90,9 +95,8 @@ async def give_task(user_id, task_id):
 
 @dp.message_handler(lambda message: message.text == "Получить другое задание")
 async def get_another_task(message: types.Message):
-# Логика для получения другого задания
-await process_location(message, state)
+    # Логика для получения другого задания
+    await process_location(message, state)
 
 if __name__ == '__main__':
-    # Здесь начинается основная часть программы
     executor.start_polling(dp, skip_updates=True)
