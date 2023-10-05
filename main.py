@@ -30,9 +30,9 @@ async def process_username(message: types.Message, state: FSMContext):
     username = message.text
     # Проверка на уникальность username
     unique = check_unique_username(username)
-if not unique:
-    await message.answer("Это имя пользователя уже занято, пожалуйста, выберите другое.")
-    return
+    if not unique:
+        await message.answer("Это имя пользователя уже занято, пожалуйста, выберите другое.")
+        return
     # Добавление нового пользователя
     add_new_user(username, message.from_user.id)
     await state.finish()
