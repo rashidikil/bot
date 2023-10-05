@@ -92,4 +92,5 @@ async def give_task(user_id, task_id):
 async def get_another_task(message: types.Message):
 # Логика для получения другого задания
 
+if __name__ == '__main__':
 executor.start_polling(dp, skip_updates=True)
